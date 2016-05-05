@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBUUID *serviceUUID;
+@property (nonatomic, strong) NSMutableArray *connectedPeripherals;
 
 
 @end
@@ -56,6 +57,14 @@
 
 #pragma mark - setters & getters
 
+- (NSMutableArray *)connectedPeripherals {
+    
+    if (!_connectedPeripherals) {
+        _connectedPeripherals = @[].mutableCopy;
+    }
+    return _connectedPeripherals;
+    
+}
 
 #pragma mark - class methods
 
@@ -88,11 +97,7 @@
 }
 
 + (NSArray *)connectedPeripherals {
-    
-    STMBTCentralManager *sc = [self sharedController];
-
-    return [sc.centralManager retrieveConnectedPeripheralsWithServices:@[sc.serviceUUID]];
-    
+    return [self sharedController].connectedPeripherals.copy;
 }
 
 
@@ -145,6 +150,7 @@
     
     NSLog(@"Connect %@ with UUID %@", peripheral.name, peripheral.identifier);
     
+    [self.connectedPeripherals addObject:peripheral];
     [self.delegate didConnectPeripheral:peripheral];
 
 }
@@ -161,6 +167,7 @@
     
     NSLog(@"Disconnect %@ with UUID %@", peripheral.name, peripheral.identifier);
     
+    [self.connectedPeripherals removeObject:peripheral];
     [self.delegate didDisconnectPeripheral:peripheral];
     
 }
