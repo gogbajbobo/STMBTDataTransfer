@@ -43,9 +43,9 @@
     
     if (self) {
         
-        NSDictionary *options = @{CBCentralManagerOptionShowPowerAlertKey: @(YES)};
-        
-        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:options];
+        self.centralManager = [[CBCentralManager alloc] initWithDelegate:self
+                                                                   queue:nil
+                                                                 options:@{CBCentralManagerOptionShowPowerAlertKey: @(YES)}];
         
     }
     

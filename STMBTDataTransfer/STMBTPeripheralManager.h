@@ -9,8 +9,13 @@
 #import <Foundation/Foundation.h>
 
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "STMBTConstants.h"
 
 
 @interface STMBTPeripheralManager : NSObject
+
++ (STMBTPeripheralManager *)sharedController;
++ (void)startAdvertisingServiceWithUUID:(NSString *)serviceUUID;
+
 
 @end
