@@ -113,6 +113,7 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[self cellIdentifier]];
     
+    [STMBTCentralManager sharedController].delegate = self;
     [STMBTCentralManager startScanForServiceWithUUID:SERVICE_UUID];
     
 }
