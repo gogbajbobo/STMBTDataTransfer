@@ -18,6 +18,7 @@
 		2C13F4C41CDB1B4D00A5F129 /* STMBTCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */; };
 		2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */; };
 		2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */; };
+		2C13F4D41CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		2C13F4C81CDB216100A5F129 /* STMBTCentralManagerTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCentralManagerTVC.h; sourceTree = "<group>"; };
 		2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTCentralManagerTVC.m; sourceTree = "<group>"; };
 		2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTConstants.h; sourceTree = "<group>"; };
+		2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTPeripheralManagerVC.h; sourceTree = "<group>"; };
+		2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTPeripheralManagerVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */,
 				2C13F4C51CDB1B7000A5F129 /* STMBTPeripheralManager.h */,
 				2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */,
+				2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */,
+				2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */,
 			);
 			path = STMBTDataTransfer;
 			sourceTree = "<group>";
@@ -288,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */,
+				2C13F4D41CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m in Sources */,
 				2C13F4971CDB1ADC00A5F129 /* ViewController.m in Sources */,
 				2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */,
 				2C13F4941CDB1ADC00A5F129 /* AppDelegate.m in Sources */,
@@ -518,6 +524,7 @@
 				2C13F4BB1CDB1ADC00A5F129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C13F4BC1CDB1ADC00A5F129 /* Build configuration list for PBXNativeTarget "STMBTDataTransferTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +533,7 @@
 				2C13F4BE1CDB1ADC00A5F129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2C13F4BF1CDB1ADC00A5F129 /* Build configuration list for PBXNativeTarget "STMBTDataTransferUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +542,7 @@
 				2C13F4C11CDB1ADC00A5F129 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

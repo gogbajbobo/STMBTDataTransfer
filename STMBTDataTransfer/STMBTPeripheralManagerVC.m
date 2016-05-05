@@ -21,5 +21,14 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    if ([self isMovingFromParentViewController]) {
+        [STMBTPeripheralManager stopAdvertising];
+    }
+    
+}
 
 @end

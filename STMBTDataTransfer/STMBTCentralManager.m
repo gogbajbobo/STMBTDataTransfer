@@ -82,6 +82,10 @@
     
 }
 
++ (void)stopScan {
+    [[self sharedController].centralManager stopScan];
+}
+
 
 #pragma mark - CBCentralManagerDelegate
 

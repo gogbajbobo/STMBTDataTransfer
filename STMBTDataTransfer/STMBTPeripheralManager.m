@@ -70,6 +70,10 @@
     
 }
 
++ (void)stopAdvertising {
+    [[self sharedController].peripheralManager stopAdvertising];
+}
+
 
 #pragma mark - CBPeripheralManagerDelegate
 

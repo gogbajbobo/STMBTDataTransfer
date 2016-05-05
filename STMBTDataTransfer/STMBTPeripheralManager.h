@@ -15,7 +15,9 @@
 @interface STMBTPeripheralManager : NSObject
 
 + (STMBTPeripheralManager *)sharedController;
+
 + (void)startAdvertisingServiceWithUUID:(NSString *)serviceUUID;
++ (void)stopAdvertising;
 
 
 @end
