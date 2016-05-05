@@ -8,8 +8,6 @@
 
 #import "STMBTCentralManagerTVC.h"
 
-#import "STMBTCentralManager.h"
-
 
 @interface STMBTCentralManagerTVC ()
 
@@ -34,13 +32,37 @@
     
 }
 
-- (void)didDiscoverPeripheral:(NSNotification *)notification {
+
+#pragma mark - STMBTCentralManagerDelegate
+
+- (void)didDiscoverPeripheral:(CBPeripheral *)peripheral {
     
-    [self.tableData addObject:notification.userInfo];
+    [self.tableData addObject:peripheral];
     [self.tableView reloadData];
     
 }
 
+- (void)didConnectPeripheral:(CBPeripheral *)peripheral {
+    [self reloadCellWithPeripheral:peripheral];
+}
+
+- (void)didFailToConnectPeripheral:(CBPeripheral *)peripheral {
+    [self reloadCellWithPeripheral:peripheral];
+}
+
+- (void)didDisconnectPeripheral:(CBPeripheral *)peripheral {
+    [self reloadCellWithPeripheral:peripheral];
+}
+
+- (void)reloadCellWithPeripheral:(CBPeripheral *)peripheral {
+
+    NSUInteger peripheralIndex = [self.tableData indexOfObject:peripheral];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:peripheralIndex inSection:0];
+    
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+}
 
 #pragma mark - Table view data source
 
@@ -59,9 +81,11 @@
 
     if (self.tableData.count > indexPath.row) {
         
-        NSDictionary *cellData = self.tableData[indexPath.row];
+        CBPeripheral *peripheral = self.tableData[indexPath.row];
         
-        cell.textLabel.text = cellData[@"name"];
+        cell.textLabel.text = peripheral.name;
+        
+        cell.accessoryType = ([[STMBTCentralManager connectedPeripherals] containsObject:peripheral]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
     }
     
@@ -69,17 +93,19 @@
     
 }
 
-
-#pragma mark - view lifecycle
-
-- (void)addObservers {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didDiscoverPeripheral:)
-                                                 name:PERIPHERAL_DISCOVER_NOTIFICATION
-                                               object:[STMBTCentralManager sharedController]];
+    if (self.tableData.count > indexPath.row) {
+        
+        CBPeripheral *peripheral = self.tableData[indexPath.row];
+        [STMBTCentralManager connectPeripheral:peripheral];
+        
+    }
     
 }
+
+
+#pragma mark - view lifecycle
 
 - (void)viewDidLoad {
     
@@ -87,7 +113,6 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[self cellIdentifier]];
     
-    [self addObservers];
     [STMBTCentralManager startScanForServiceWithUUID:SERVICE_UUID];
     
 }

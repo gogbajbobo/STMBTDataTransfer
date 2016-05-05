@@ -8,19 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import <CoreBluetooth/CoreBluetooth.h>
 #import "STMBTConstants.h"
+#import "STMBTCentralManagerDelegate.h"
 
 
 @interface STMBTCentralManager : NSObject
 
-@property (nonatomic, strong) NSMutableArray *discoveredPeripherals;
-
+@property (nonatomic, strong) id <STMBTCentralManagerDelegate> delegate;
 
 + (STMBTCentralManager *)sharedController;
 
 + (void)startScanForServiceWithUUID:(NSString *)serviceUUID;
 + (void)stopScan;
+
++ (void)connectPeripheral:(CBPeripheral *)peripheral;
+
++ (NSArray *)connectedPeripherals;
 
 
 @end

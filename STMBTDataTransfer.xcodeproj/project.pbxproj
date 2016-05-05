@@ -64,6 +64,7 @@
 		2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTConstants.h; sourceTree = "<group>"; };
 		2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTPeripheralManagerVC.h; sourceTree = "<group>"; };
 		2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTPeripheralManagerVC.m; sourceTree = "<group>"; };
+		2C13F4D51CDB701600A5F129 /* STMBTCentralManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCentralManagerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +125,7 @@
 				2C13F4A01CDB1ADC00A5F129 /* Info.plist */,
 				2C13F48F1CDB1ADC00A5F129 /* Supporting Files */,
 				2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */,
+				2C13F4D51CDB701600A5F129 /* STMBTCentralManagerDelegate.h */,
 				2C13F4C21CDB1B4D00A5F129 /* STMBTCentralManager.h */,
 				2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */,
 				2C13F4C81CDB216100A5F129 /* STMBTCentralManagerTVC.h */,

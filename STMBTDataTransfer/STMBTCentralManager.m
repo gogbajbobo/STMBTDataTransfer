@@ -12,7 +12,7 @@
 @interface STMBTCentralManager() <CBCentralManagerDelegate>
 
 @property (nonatomic, strong) CBCentralManager *centralManager;
-@property (nonatomic, strong) NSString *serviceUUID;
+@property (nonatomic, strong) CBUUID *serviceUUID;
 
 
 @end
@@ -56,15 +56,6 @@
 
 #pragma mark - setters & getters
 
-- (NSMutableArray *)discoveredPeripherals {
-    
-    if (!_discoveredPeripherals) {
-        _discoveredPeripherals = @[].mutableCopy;
-    }
-    return _discoveredPeripherals;
-    
-}
-
 
 #pragma mark - class methods
 
@@ -72,11 +63,11 @@
     
     STMBTCentralManager *sc = [self sharedController];
 
-    sc.serviceUUID = serviceUUID;
+    sc.serviceUUID = [CBUUID UUIDWithString:serviceUUID];
     
     if (sc.centralManager.state == CBCentralManagerStatePoweredOn) {
         
-        [sc.centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:sc.serviceUUID]] options:nil];
+        [sc.centralManager scanForPeripheralsWithServices:@[sc.serviceUUID] options:nil];
         
     }
     
@@ -84,6 +75,24 @@
 
 + (void)stopScan {
     [[self sharedController].centralManager stopScan];
+}
+
++ (void)connectPeripheral:(CBPeripheral *)peripheral {
+    
+    STMBTCentralManager *sc = [self sharedController];
+
+    if (sc.centralManager.state == CBCentralManagerStatePoweredOn) {
+        [sc.centralManager connectPeripheral:peripheral options:nil];
+    }
+    
+}
+
++ (NSArray *)connectedPeripherals {
+    
+    STMBTCentralManager *sc = [self sharedController];
+
+    return [sc.centralManager retrieveConnectedPeripheralsWithServices:@[sc.serviceUUID]];
+    
 }
 
 
@@ -115,7 +124,7 @@
         case CBCentralManagerStatePoweredOn: {
             
             if (self.serviceUUID) {
-                [self.centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:self.serviceUUID]] options:nil];
+                [self.centralManager scanForPeripheralsWithServices:@[self.serviceUUID] options:nil];
             }
             
             break;
@@ -126,17 +135,35 @@
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
     
-    NSLog(@"Discovered %@ at %@", peripheral.name, RSSI);
+    NSLog(@"Discovered %@ with UUID %@ at %@", peripheral.name, peripheral.identifier, RSSI);
     
-    NSDictionary *userInfo = @{@"identifier"    : peripheral.identifier,
-                               @"name"          : peripheral.name};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:PERIPHERAL_DISCOVER_NOTIFICATION object:self userInfo:userInfo];
-    
-    [self.discoveredPeripherals addObject:peripheral];
-    
+    [self.delegate didDiscoverPeripheral:peripheral];
+
 }
 
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
+    
+    NSLog(@"Connect %@ with UUID %@", peripheral.name, peripheral.identifier);
+    
+    [self.delegate didConnectPeripheral:peripheral];
+
+}
+
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+    
+    NSLog(@"Fail to connect %@ with UUID %@", peripheral.name, peripheral.identifier);
+    
+    [self.delegate didFailToConnectPeripheral:peripheral];
+
+}
+
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+    
+    NSLog(@"Disconnect %@ with UUID %@", peripheral.name, peripheral.identifier);
+    
+    [self.delegate didDisconnectPeripheral:peripheral];
+    
+}
 
 
 @end

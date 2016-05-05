@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface STMBTCentralManagerTVC : UITableViewController
+#import "STMBTCentralManager.h"
+
+
+@interface STMBTCentralManagerTVC : UITableViewController <STMBTCentralManagerDelegate>
+
 
 @end
