@@ -15,6 +15,9 @@
 		2C13F49F1CDB1ADC00A5F129 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C13F49D1CDB1ADC00A5F129 /* LaunchScreen.storyboard */; };
 		2C13F4AA1CDB1ADC00A5F129 /* STMBTDataTransferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4A91CDB1ADC00A5F129 /* STMBTDataTransferTests.m */; };
 		2C13F4B51CDB1ADC00A5F129 /* STMBTDataTransferUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4B41CDB1ADC00A5F129 /* STMBTDataTransferUITests.m */; };
+		2C13F4C41CDB1B4D00A5F129 /* STMBTCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */; };
+		2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */; };
+		2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,13 @@
 		2C13F4B01CDB1ADC00A5F129 /* STMBTDataTransferUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = STMBTDataTransferUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C13F4B41CDB1ADC00A5F129 /* STMBTDataTransferUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STMBTDataTransferUITests.m; sourceTree = "<group>"; };
 		2C13F4B61CDB1ADC00A5F129 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C13F4C21CDB1B4D00A5F129 /* STMBTCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCentralManager.h; sourceTree = "<group>"; };
+		2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTCentralManager.m; sourceTree = "<group>"; };
+		2C13F4C51CDB1B7000A5F129 /* STMBTPeripheralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTPeripheralManager.h; sourceTree = "<group>"; };
+		2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTPeripheralManager.m; sourceTree = "<group>"; };
+		2C13F4C81CDB216100A5F129 /* STMBTCentralManagerTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCentralManagerTVC.h; sourceTree = "<group>"; };
+		2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTCentralManagerTVC.m; sourceTree = "<group>"; };
+		2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +120,13 @@
 				2C13F49D1CDB1ADC00A5F129 /* LaunchScreen.storyboard */,
 				2C13F4A01CDB1ADC00A5F129 /* Info.plist */,
 				2C13F48F1CDB1ADC00A5F129 /* Supporting Files */,
+				2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */,
+				2C13F4C21CDB1B4D00A5F129 /* STMBTCentralManager.h */,
+				2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */,
+				2C13F4C81CDB216100A5F129 /* STMBTCentralManagerTVC.h */,
+				2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */,
+				2C13F4C51CDB1B7000A5F129 /* STMBTPeripheralManager.h */,
+				2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */,
 			);
 			path = STMBTDataTransfer;
 			sourceTree = "<group>";
@@ -270,8 +287,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */,
 				2C13F4971CDB1ADC00A5F129 /* ViewController.m in Sources */,
+				2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */,
 				2C13F4941CDB1ADC00A5F129 /* AppDelegate.m in Sources */,
+				2C13F4C41CDB1B4D00A5F129 /* STMBTCentralManager.m in Sources */,
 				2C13F4911CDB1ADC00A5F129 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
