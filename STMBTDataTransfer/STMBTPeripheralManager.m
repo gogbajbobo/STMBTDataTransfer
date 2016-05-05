@@ -11,7 +11,8 @@
 @interface STMBTPeripheralManager() <CBPeripheralManagerDelegate>
 
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
-@property (nonatomic, strong) NSString *serviceUUID;
+@property (nonatomic, strong) CBUUID *serviceUUID;
+@property (nonatomic, strong) NSArray <CBUUID *> *characteristicUUIDs;
 
 
 @end
@@ -52,26 +53,72 @@
     
 }
 
+- (void)startServiceWithUUID:(CBUUID *)serviceUUID andCharacteristicUUIDs:(NSArray <CBUUID *> *)characteristicUUIDs {
+    
+    if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
+        
+        NSMutableArray *chars = @[].mutableCopy;
+        
+        for (CBUUID *uuid in self.characteristicUUIDs) {
+            
+            CBMutableCharacteristic *characteristic = [[CBMutableCharacteristic alloc] initWithType:uuid
+                                                                                         properties:CBCharacteristicPropertyNotify
+                                                                                              value:nil
+                                                                                        permissions:CBAttributePermissionsReadable];
+            
+            [chars addObject:characteristic];
+            
+        }
+        
+        CBMutableService *service = [[CBMutableService alloc] initWithType:self.serviceUUID
+                                                                   primary:YES];
+        
+        service.characteristics = chars;
+        
+        [self.peripheralManager addService:service];
+        
+        [self.peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey: @[self.serviceUUID]}];
+        
+    }
+
+}
+
+- (void)stopService {
+    
+    [self.peripheralManager stopAdvertising];
+    [self.peripheralManager removeAllServices];
+    
+    self.serviceUUID = nil;
+    self.characteristicUUIDs = nil;
+
+}
+
 
 #pragma mark - setters & getters
 
 
 #pragma mark - class methods
 
-+ (void)startAdvertisingServiceWithUUID:(NSString *)serviceUUID {
-    
++ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs {
+
     STMBTPeripheralManager *sc = [self sharedController];
+
+    sc.serviceUUID = [CBUUID UUIDWithString:serviceUUID];
     
-    sc.serviceUUID = serviceUUID;
+    NSMutableArray *charUUIDs = @[].mutableCopy;
     
-    if (sc.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
-        [sc.peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey: @[[CBUUID UUIDWithString:sc.serviceUUID]]}];
+    for (NSString *uuid in characteristicUUIDs) {
+        [charUUIDs addObject:[CBUUID UUIDWithString:uuid]];
     }
+    
+    sc.characteristicUUIDs =  charUUIDs;
+
+    [[self sharedController] startServiceWithUUID:sc.serviceUUID andCharacteristicUUIDs:sc.characteristicUUIDs];
     
 }
 
-+ (void)stopAdvertising {
-    [[self sharedController].peripheralManager stopAdvertising];
++ (void)stopService {
+    [[self sharedController] stopService];
 }
 
 
@@ -102,8 +149,8 @@
         }
         case CBPeripheralManagerStatePoweredOn: {
             
-            if (self.serviceUUID) {
-                [self.peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey: @[[CBUUID UUIDWithString:self.serviceUUID]]}];
+            if (self.serviceUUID && self.characteristicUUIDs) {
+                [self startServiceWithUUID:self.serviceUUID andCharacteristicUUIDs:self.characteristicUUIDs];
             }
             
             break;

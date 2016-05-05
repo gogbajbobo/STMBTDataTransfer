@@ -16,8 +16,8 @@
 
 + (STMBTPeripheralManager *)sharedController;
 
-+ (void)startAdvertisingServiceWithUUID:(NSString *)serviceUUID;
-+ (void)stopAdvertising;
++ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs;
++ (void)stopService;
 
 
 @end

@@ -17,7 +17,7 @@
 
     [super viewDidLoad];
     
-    [STMBTPeripheralManager startAdvertisingServiceWithUUID:SERVICE_UUID];
+    [STMBTPeripheralManager startServiceWithUUID:SERVICE_UUID andCharacteristicUUIDs:@[CHARACTERISTIC_UUID]];
     
 }
 
@@ -26,7 +26,7 @@
     [super viewWillDisappear:animated];
     
     if ([self isMovingFromParentViewController]) {
-        [STMBTPeripheralManager stopAdvertising];
+        [STMBTPeripheralManager stopService];
     }
     
 }
