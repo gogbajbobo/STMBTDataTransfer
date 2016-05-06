@@ -85,7 +85,20 @@
                     <view key="view" contentMode="scaleToFill" id="L3v-yg-xR3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtE-qW-BSS">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="updateButtonPressed:" destination="52T-vc-M5m" eventType="touchUpInside" id="n7Q-0y-7GH"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vtE-qW-BSS" firstAttribute="centerX" secondItem="L3v-yg-xR3" secondAttribute="centerX" id="EuL-x7-LlI"/>
+                            <constraint firstItem="vtE-qW-BSS" firstAttribute="centerY" secondItem="L3v-yg-xR3" secondAttribute="centerY" id="b0y-BM-RUe"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tD2-Li-0WP" userLabel="First Responder" sceneMemberID="firstResponder"/>

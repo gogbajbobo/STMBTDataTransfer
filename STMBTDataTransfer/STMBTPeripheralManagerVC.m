@@ -13,6 +13,14 @@
 
 @implementation STMBTPeripheralManagerVC
 
+
+- (IBAction)updateButtonPressed:(id)sender {
+    [STMBTPeripheralManager updateValue:nil forServiceUUID:nil withCharacteristicUUID:nil];
+}
+
+
+#pragma mark - view lifecycle
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
