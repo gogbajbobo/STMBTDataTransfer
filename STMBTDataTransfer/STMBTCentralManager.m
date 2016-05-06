@@ -13,8 +13,9 @@
 
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBUUID *serviceUUID;
-@property (nonatomic, strong) NSArray <CBUUID *> *characteristicUUIDs;
+@property (nonatomic, strong) CBUUID *characteristicUUID;
 @property (nonatomic, strong) NSMutableArray *connectedPeripherals;
+@property (nonatomic, strong) CBCharacteristic *characteristic;
 
 
 @end
@@ -69,19 +70,12 @@
 
 #pragma mark - class methods
 
-+ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs {
++ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID {
     
     STMBTCentralManager *sc = [self sharedController];
 
     sc.serviceUUID = [CBUUID UUIDWithString:serviceUUID];
-    
-    NSMutableArray *charUUIDs = @[].mutableCopy;
-    
-    for (NSString *uuid in characteristicUUIDs) {
-        [charUUIDs addObject:[CBUUID UUIDWithString:uuid]];
-    }
-    
-    sc.characteristicUUIDs =  charUUIDs;
+    sc.characteristicUUID = [CBUUID UUIDWithString:characteristicUUID];
 
     if (sc.centralManager.state == CBCentralManagerStatePoweredOn) {
         
@@ -107,6 +101,19 @@
 
 + (NSArray *)connectedPeripherals {
     return [self sharedController].connectedPeripherals.copy;
+}
+
++ (void)updateValue:(NSData *)newValue {
+    
+    NSDictionary *value = @{@"result"   : @"ok",
+                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
+    
+    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+
+    for (CBPeripheral *peripheral in [self sharedController].connectedPeripherals) {
+        [peripheral writeValue:newValue forCharacteristic:[self sharedController].characteristic type:CBCharacteristicWriteWithResponse];
+    }
+    
 }
 
 
@@ -207,7 +214,7 @@
         
         if ([service.UUID isEqual:self.serviceUUID]) {
             
-            [peripheral discoverCharacteristics:self.characteristicUUIDs forService:service];
+            [peripheral discoverCharacteristics:@[self.characteristicUUID] forService:service];
             
         }
         
@@ -230,7 +237,9 @@
             
             NSLog(@"Discovered characteristic %@", characteristic);
             
-            if ([self.characteristicUUIDs containsObject:characteristic.UUID]) {
+            if ([self.characteristicUUID isEqual:characteristic.UUID]) {
+                
+                self.characteristic = characteristic;
                 
                 if (characteristic.properties & CBCharacteristicPropertyRead) {
                     [peripheral readValueForCharacteristic:characteristic];
@@ -257,7 +266,7 @@
         
         id value = [NSJSONSerialization JSONObjectWithData:characteristic.value options:NSJSONReadingMutableContainers error:nil];
         
-        NSLog(@"characteristic.value %@ for peripheral %@", value, peripheral.name);
+        NSLog(@"didUpdateValueForCharacteristic characteristic.value %@ for peripheral %@", value, peripheral.name);
         
         if (!characteristic.isNotifying && (characteristic.properties & CBCharacteristicPropertyNotify)) {
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
@@ -282,6 +291,23 @@
         
     }
     
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"peripheral didWriteValueForCharacteristic error: %@", error.localizedDescription);
+        return;
+        
+    }
+
+    if ([self.connectedPeripherals containsObject:peripheral]) {
+        
+        NSLog(@"didWriteValueForCharacteristic characteristic.value %@ for peripheral %@", characteristic.value, peripheral.name);
+        
+    }
+
 }
 
 

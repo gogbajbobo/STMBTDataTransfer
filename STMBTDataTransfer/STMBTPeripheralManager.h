@@ -16,10 +16,10 @@
 
 + (STMBTPeripheralManager *)sharedController;
 
-+ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs;
++ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUID:(NSString *)characteristicUUID;
 + (void)stopService;
 
-+ (void)updateValue:(NSData *)newValue forServiceUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID;
++ (void)updateValue:(NSData *)newValue;
 
 
 @end

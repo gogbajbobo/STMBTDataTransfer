@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
 @property (nonatomic, strong) CBUUID *serviceUUID;
-@property (nonatomic, strong) NSArray <CBUUID *> *characteristicUUIDs;
+@property (nonatomic, strong) CBUUID *characteristicUUID;
 @property (nonatomic, strong) CBMutableCharacteristic *characteristic;
 
 
@@ -54,33 +54,22 @@
     
 }
 
-- (void)startServiceWithUUID:(CBUUID *)serviceUUID andCharacteristicUUIDs:(NSArray <CBUUID *> *)characteristicUUIDs {
+- (void)startServiceWithUUID:(CBUUID *)serviceUUID andCharacteristicUUID:(CBUUID *)characteristicUUID {
     
     if (self.peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
         
-        NSMutableArray *chars = @[].mutableCopy;
+        CBCharacteristicProperties chProperties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
+        CBAttributePermissions chPermission = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
         
-        for (CBUUID *uuid in self.characteristicUUIDs) {
-            
-            CBCharacteristicProperties chProperties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
-            CBAttributePermissions chPermission = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
-            
-            CBMutableCharacteristic *characteristic = [[CBMutableCharacteristic alloc] initWithType:uuid
-                                                                                         properties:chProperties
-                                                                                              value:nil
-                                                                                        permissions:chPermission];
-            
-            [chars addObject:characteristic];
-            
-#warning assume here only one characteristic
-            self.characteristic = characteristic;
-            
-        }
+        self.characteristic = [[CBMutableCharacteristic alloc] initWithType:characteristicUUID
+                                                                 properties:chProperties
+                                                                      value:nil
+                                                                permissions:chPermission];
         
         CBMutableService *service = [[CBMutableService alloc] initWithType:self.serviceUUID
                                                                    primary:YES];
         
-        service.characteristics = chars;
+        service.characteristics = @[self.characteristic];
         
         [self.peripheralManager addService:service];
         
@@ -96,7 +85,7 @@
     [self.peripheralManager removeAllServices];
     
     self.serviceUUID = nil;
-    self.characteristicUUIDs = nil;
+    self.characteristicUUID = nil;
 
 }
 
@@ -107,21 +96,14 @@
 
 #pragma mark - class methods
 
-+ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs {
++ (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUID:(NSString *)characteristicUUID {
 
     STMBTPeripheralManager *sc = [self sharedController];
 
     sc.serviceUUID = [CBUUID UUIDWithString:serviceUUID];
+    sc.characteristicUUID = [CBUUID UUIDWithString:characteristicUUID];
     
-    NSMutableArray *charUUIDs = @[].mutableCopy;
-    
-    for (NSString *uuid in characteristicUUIDs) {
-        [charUUIDs addObject:[CBUUID UUIDWithString:uuid]];
-    }
-    
-    sc.characteristicUUIDs =  charUUIDs;
-
-    [[self sharedController] startServiceWithUUID:sc.serviceUUID andCharacteristicUUIDs:sc.characteristicUUIDs];
+    [[self sharedController] startServiceWithUUID:sc.serviceUUID andCharacteristicUUID:sc.characteristicUUID];
     
 }
 
@@ -129,7 +111,7 @@
     [[self sharedController] stopService];
 }
 
-+ (void)updateValue:(NSData *)newValue forServiceUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID {
++ (void)updateValue:(NSData *)newValue {
     
     NSDictionary *value = @{@"result"   : @"ok",
                             @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
@@ -170,8 +152,8 @@
         }
         case CBPeripheralManagerStatePoweredOn: {
             
-            if (self.serviceUUID && self.characteristicUUIDs) {
-                [self startServiceWithUUID:self.serviceUUID andCharacteristicUUIDs:self.characteristicUUIDs];
+            if (self.serviceUUID && self.characteristicUUID) {
+                [self startServiceWithUUID:self.serviceUUID andCharacteristicUUID:self.characteristicUUID];
             }
             
             break;
@@ -188,13 +170,19 @@
     
 }
 
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic {
+    
+    NSLog(@"peripheral didSubscribeToCharacteristic");
+    
+}
+
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request {
     
     NSLog(@"peripheral didReceiveReadRequest %@", request);
     
-    if ([self.characteristicUUIDs containsObject:request.characteristic.UUID]) {
+    if ([self.characteristicUUID isEqual:request.characteristic.UUID]) {
         
-        [[self class] updateValue:nil forServiceUUID:nil withCharacteristicUUID:nil];
+        [[self class] updateValue:nil];
         
         request.value = self.characteristic.value;
         
@@ -204,10 +192,23 @@
     
 }
 
-- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic {
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveWriteRequests:(NSArray<CBATTRequest *> *)requests {
     
-    NSLog(@"peripheral didSubscribeToCharacteristic");
+    NSLog(@"peripheral didReceiveWriteRequests %@", requests);
+    
+    for (CBATTRequest *request in requests) {
+        
+        if ([self.characteristicUUID isEqual:request.characteristic.UUID]) {
 
+            [self.peripheralManager updateValue:request.value forCharacteristic:self.characteristic onSubscribedCentrals:nil];
+
+            [self.peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
+            
+        }
+
+    }
+    
 }
+
 
 @end

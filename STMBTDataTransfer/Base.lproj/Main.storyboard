@@ -69,6 +69,14 @@
                             <outlet property="delegate" destination="T8I-p4-R9P" id="Ke5-hw-YCH"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="T9m-1U-i2t"/>
+                        <barButtonItem title="Item" id="YkD-zF-N6a">
+                            <connections>
+                                <action selector="buttonPressed:" destination="T8I-p4-R9P" id="KeJ-yT-F7G"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cZe-vc-LEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,13 +116,17 @@
         <!--Navigation Controller-->
         <scene sceneID="Cjm-eT-poA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ojw-HD-DjA" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="ojw-HD-DjA" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XBy-Ks-xdf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="mvv-fx-twA">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="8Iw-ct-cRU"/>
                     </connections>

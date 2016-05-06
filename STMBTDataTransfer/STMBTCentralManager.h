@@ -18,12 +18,14 @@
 
 + (STMBTCentralManager *)sharedController;
 
-+ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs;
++ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID;
 + (void)stopScan;
 
 + (void)connectPeripheral:(CBPeripheral *)peripheral;
 
 + (NSArray *)connectedPeripherals;
+
++ (void)updateValue:(NSData *)newValue;
 
 
 @end

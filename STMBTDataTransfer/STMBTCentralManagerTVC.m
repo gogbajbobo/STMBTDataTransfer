@@ -32,6 +32,10 @@
     
 }
 
+- (IBAction)buttonPressed:(id)sender {
+    [STMBTCentralManager updateValue:nil];
+}
+
 
 #pragma mark - STMBTCentralManagerDelegate
 
@@ -114,7 +118,7 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[self cellIdentifier]];
     
     [STMBTCentralManager sharedController].delegate = self;
-    [STMBTCentralManager startScanForServiceWithUUID:SERVICE_UUID withCharacteristicUUIDs:@[CHARACTERISTIC_UUID]];
+    [STMBTCentralManager startScanForServiceWithUUID:SERVICE_UUID withCharacteristicUUID:CHARACTERISTIC_UUID];
     
 }
 

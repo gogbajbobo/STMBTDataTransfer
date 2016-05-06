@@ -15,7 +15,7 @@
 
 
 - (IBAction)updateButtonPressed:(id)sender {
-    [STMBTPeripheralManager updateValue:nil forServiceUUID:nil withCharacteristicUUID:nil];
+    [STMBTPeripheralManager updateValue:nil];
 }
 
 
@@ -25,7 +25,7 @@
 
     [super viewDidLoad];
     
-    [STMBTPeripheralManager startServiceWithUUID:SERVICE_UUID andCharacteristicUUIDs:@[CHARACTERISTIC_UUID]];
+    [STMBTPeripheralManager startServiceWithUUID:SERVICE_UUID andCharacteristicUUID:CHARACTERISTIC_UUID];
     
 }
 
