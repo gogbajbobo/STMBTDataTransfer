@@ -162,7 +162,9 @@
     peripheral.delegate = self;
     
     [peripheral discoverServices:@[self.serviceUUID]];
-    
+
+    [self.connectedPeripherals addObject:peripheral];
+
     [self.delegate didConnectPeripheral:peripheral];
 
 }
@@ -230,12 +232,8 @@
             
             if ([self.characteristicUUIDs containsObject:characteristic.UUID]) {
                 
-                if (characteristic.properties & CBCharacteristicPropertyNotify) {
-                    
-                    [self.connectedPeripherals addObject:peripheral];
-                    
+                if (characteristic.properties & CBCharacteristicPropertyRead) {
                     [peripheral readValueForCharacteristic:characteristic];
-
                 }
                 
             }
@@ -257,9 +255,11 @@
     
     if ([self.connectedPeripherals containsObject:peripheral]) {
         
-        NSLog(@"characteristic.value %@ for peripheral %@", characteristic.value, peripheral.name);
+        id value = [NSJSONSerialization JSONObjectWithData:characteristic.value options:NSJSONReadingMutableContainers error:nil];
         
-        if (!characteristic.isNotifying) {
+        NSLog(@"characteristic.value %@ for peripheral %@", value, peripheral.name);
+        
+        if (!characteristic.isNotifying && (characteristic.properties & CBCharacteristicPropertyNotify)) {
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
         }
         
@@ -275,7 +275,6 @@
         return;
         
     }
-
     
     if ([self.connectedPeripherals containsObject:peripheral]) {
         
