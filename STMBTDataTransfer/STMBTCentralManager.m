@@ -9,10 +9,11 @@
 #import "STMBTCentralManager.h"
 
 
-@interface STMBTCentralManager() <CBCentralManagerDelegate>
+@interface STMBTCentralManager() <CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property (nonatomic, strong) CBCentralManager *centralManager;
 @property (nonatomic, strong) CBUUID *serviceUUID;
+@property (nonatomic, strong) NSArray <CBUUID *> *characteristicUUIDs;
 @property (nonatomic, strong) NSMutableArray *connectedPeripherals;
 
 
@@ -68,12 +69,20 @@
 
 #pragma mark - class methods
 
-+ (void)startScanForServiceWithUUID:(NSString *)serviceUUID {
++ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs {
     
     STMBTCentralManager *sc = [self sharedController];
 
     sc.serviceUUID = [CBUUID UUIDWithString:serviceUUID];
     
+    NSMutableArray *charUUIDs = @[].mutableCopy;
+    
+    for (NSString *uuid in characteristicUUIDs) {
+        [charUUIDs addObject:[CBUUID UUIDWithString:uuid]];
+    }
+    
+    sc.characteristicUUIDs =  charUUIDs;
+
     if (sc.centralManager.state == CBCentralManagerStatePoweredOn) {
         
         [sc.centralManager scanForPeripheralsWithServices:@[sc.serviceUUID] options:nil];
@@ -150,7 +159,10 @@
     
     NSLog(@"Connect %@ with UUID %@", peripheral.name, peripheral.identifier);
     
-    [self.connectedPeripherals addObject:peripheral];
+    peripheral.delegate = self;
+    
+    [peripheral discoverServices:@[self.serviceUUID]];
+    
     [self.delegate didConnectPeripheral:peripheral];
 
 }
@@ -167,8 +179,109 @@
     
     NSLog(@"Disconnect %@ with UUID %@", peripheral.name, peripheral.identifier);
     
+    peripheral.delegate = nil;
+#warning should remove notification subscription
+    
     [self.connectedPeripherals removeObject:peripheral];
     [self.delegate didDisconnectPeripheral:peripheral];
+    
+}
+
+
+#pragma mark - CBPeripheralDelegate
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"peripheral didDiscoverServices error: %@", error.localizedDescription);
+        return;
+        
+    }
+    
+    for (CBService *service in peripheral.services) {
+        
+        NSLog(@"Discovered service %@", service);
+        
+        if ([service.UUID isEqual:self.serviceUUID]) {
+            
+            [peripheral discoverCharacteristics:self.characteristicUUIDs forService:service];
+            
+        }
+        
+    }
+    
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"peripheral didDiscoverCharacteristicsForService error: %@", error.localizedDescription);
+        return;
+        
+    }
+
+    if ([service.UUID isEqual:self.serviceUUID]) {
+        
+        for (CBCharacteristic *characteristic in service.characteristics) {
+            
+            NSLog(@"Discovered characteristic %@", characteristic);
+            
+            if ([self.characteristicUUIDs containsObject:characteristic.UUID]) {
+                
+                if (characteristic.properties & CBCharacteristicPropertyNotify) {
+                    
+                    [self.connectedPeripherals addObject:peripheral];
+                    
+                    [peripheral readValueForCharacteristic:characteristic];
+
+                }
+                
+            }
+            
+        }
+
+    }
+    
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(nonnull CBCharacteristic *)characteristic error:(nullable NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"peripheral didUpdateValueForCharacteristic error: %@", error.localizedDescription);
+        return;
+
+    }
+    
+    if ([self.connectedPeripherals containsObject:peripheral]) {
+        
+        NSLog(@"characteristic.value %@ for peripheral %@", characteristic.value, peripheral.name);
+        
+        if (!characteristic.isNotifying) {
+            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+        }
+        
+    }
+    
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
+    
+    if (error) {
+        
+        NSLog(@"peripheral didUpdateNotificationStateForCharacteristic error: %@", error.localizedDescription);
+        return;
+        
+    }
+
+    
+    if ([self.connectedPeripherals containsObject:peripheral]) {
+        
+        NSLog(@"characteristic isNotifying %@ for peripheral %@", @(characteristic.isNotifying), peripheral.name);
+        
+    }
     
 }
 

@@ -18,7 +18,7 @@
 
 + (STMBTCentralManager *)sharedController;
 
-+ (void)startScanForServiceWithUUID:(NSString *)serviceUUID;
++ (void)startScanForServiceWithUUID:(NSString *)serviceUUID withCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs;
 + (void)stopScan;
 
 + (void)connectPeripheral:(CBPeripheral *)peripheral;

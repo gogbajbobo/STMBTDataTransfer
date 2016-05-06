@@ -19,5 +19,7 @@
 + (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs;
 + (void)stopService;
 
++ (void)updateValue:(NSData *)newValue forServiceUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID;
+
 
 @end

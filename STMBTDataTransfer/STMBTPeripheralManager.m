@@ -13,6 +13,7 @@
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
 @property (nonatomic, strong) CBUUID *serviceUUID;
 @property (nonatomic, strong) NSArray <CBUUID *> *characteristicUUIDs;
+@property (nonatomic, strong) CBMutableCharacteristic *characteristic;
 
 
 @end
@@ -68,6 +69,9 @@
             
             [chars addObject:characteristic];
             
+#warning assume here only one characteristic
+            self.characteristic = characteristic;
+            
         }
         
         CBMutableService *service = [[CBMutableService alloc] initWithType:self.serviceUUID
@@ -97,6 +101,7 @@
 #pragma mark - setters & getters
 
 
+
 #pragma mark - class methods
 
 + (void)startServiceWithUUID:(NSString *)serviceUUID andCharacteristicUUIDs:(NSArray <NSString *> *)characteristicUUIDs {
@@ -119,6 +124,15 @@
 
 + (void)stopService {
     [[self sharedController] stopService];
+}
+
++ (void)updateValue:(NSData *)newValue forServiceUUID:(NSString *)serviceUUID withCharacteristicUUID:(NSString *)characteristicUUID {
+    
+    NSDictionary *value = @{@"result"   : @"ok",
+                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
+    
+    [self sharedController].characteristic.value = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+
 }
 
 
@@ -163,6 +177,20 @@
     
     if (error) {
         NSLog(@"peripheralManagerDidStartAdvertising error: %@", error.localizedDescription);
+    }
+    
+}
+
+- (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request {
+    
+    NSLog(@"peripheral didReceiveReadRequest %@", request);
+    
+    if ([self.characteristicUUIDs containsObject:request.characteristic.UUID]) {
+        
+        [[self class] updateValue:nil forServiceUUID:nil withCharacteristicUUID:nil];
+        
+        [self.peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
+        
     }
     
 }
