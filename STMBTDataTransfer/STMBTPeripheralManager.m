@@ -62,10 +62,13 @@
         
         for (CBUUID *uuid in self.characteristicUUIDs) {
             
+            CBCharacteristicProperties chProperties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
+            CBAttributePermissions chPermission = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
+            
             CBMutableCharacteristic *characteristic = [[CBMutableCharacteristic alloc] initWithType:uuid
-                                                                                         properties:CBCharacteristicPropertyNotify
+                                                                                         properties:chProperties
                                                                                               value:nil
-                                                                                        permissions:CBAttributePermissionsReadable];
+                                                                                        permissions:chPermission];
             
             [chars addObject:characteristic];
             
@@ -131,8 +134,12 @@
     NSDictionary *value = @{@"result"   : @"ok",
                             @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
     
-    [self sharedController].characteristic.value = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+    
+    [self sharedController].characteristic.value = newValue;
 
+    [[self sharedController].peripheralManager updateValue:newValue forCharacteristic:[self sharedController].characteristic onSubscribedCentrals:nil];
+    
 }
 
 
@@ -189,11 +196,18 @@
         
         [[self class] updateValue:nil forServiceUUID:nil withCharacteristicUUID:nil];
         
+        request.value = self.characteristic.value;
+        
         [self.peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
         
     }
     
 }
 
+- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic {
+    
+    NSLog(@"peripheral didSubscribeToCharacteristic");
+
+}
 
 @end
