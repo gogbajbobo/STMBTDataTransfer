@@ -1,5 +1,5 @@
 //
-//  STMBTCellView.h
+//  STMXOFieldVC.h
 //  STMBTDataTransfer
 //
 //  Created by Maxim Grigoriev on 07/05/16.
@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface STMBTCellView : UIView
+@interface STMXOFieldVC : UIViewController
+
+- (void)index:(NSInteger)index wasOccupiedByMe:(BOOL)byMe;
+
 
 @end
