@@ -19,6 +19,8 @@
 		2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */; };
 		2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */; };
 		2C13F4D41CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */; };
+		2C13F4D81CDE211500A5F129 /* STMBTFieldVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4D71CDE211500A5F129 /* STMBTFieldVC.m */; };
+		2C13F4DE1CDE21B800A5F129 /* STMBTCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4DD1CDE21B800A5F129 /* STMBTCellView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,10 @@
 		2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTPeripheralManagerVC.h; sourceTree = "<group>"; };
 		2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTPeripheralManagerVC.m; sourceTree = "<group>"; };
 		2C13F4D51CDB701600A5F129 /* STMBTCentralManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCentralManagerDelegate.h; sourceTree = "<group>"; };
+		2C13F4D61CDE211500A5F129 /* STMBTFieldVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTFieldVC.h; sourceTree = "<group>"; };
+		2C13F4D71CDE211500A5F129 /* STMBTFieldVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTFieldVC.m; sourceTree = "<group>"; };
+		2C13F4DC1CDE21B800A5F129 /* STMBTCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTCellView.h; sourceTree = "<group>"; };
+		2C13F4DD1CDE21B800A5F129 /* STMBTCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTCellView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +140,10 @@
 				2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */,
 				2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */,
 				2C13F4D31CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m */,
+				2C13F4D61CDE211500A5F129 /* STMBTFieldVC.h */,
+				2C13F4D71CDE211500A5F129 /* STMBTFieldVC.m */,
+				2C13F4DC1CDE21B800A5F129 /* STMBTCellView.h */,
+				2C13F4DD1CDE21B800A5F129 /* STMBTCellView.m */,
 			);
 			path = STMBTDataTransfer;
 			sourceTree = "<group>";
@@ -294,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C13F4D81CDE211500A5F129 /* STMBTFieldVC.m in Sources */,
 				2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */,
 				2C13F4D41CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m in Sources */,
 				2C13F4971CDB1ADC00A5F129 /* ViewController.m in Sources */,
@@ -301,6 +312,7 @@
 				2C13F4941CDB1ADC00A5F129 /* AppDelegate.m in Sources */,
 				2C13F4C41CDB1B4D00A5F129 /* STMBTCentralManager.m in Sources */,
 				2C13F4911CDB1ADC00A5F129 /* main.m in Sources */,
+				2C13F4DE1CDE21B800A5F129 /* STMBTCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

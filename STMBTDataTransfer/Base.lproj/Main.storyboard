@@ -77,10 +77,165 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
+                    <connections>
+                        <segue destination="htt-st-mVd" kind="show" identifier="showField" id="SLp-3D-sql"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cZe-vc-LEH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1986" y="38"/>
+        </scene>
+        <!--FieldVC-->
+        <scene sceneID="RzH-J1-MFk">
+            <objects>
+                <viewController id="htt-st-mVd" customClass="STMBTFieldVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MlZ-UB-PRa"/>
+                        <viewControllerLayoutGuide type="bottom" id="h0E-rv-f6p"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0MQ-Xc-daP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view tag="22" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pW2-bj-CDb" customClass="STMBTCellView">
+                                <rect key="frame" x="268" y="268" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721590909092" green="0.92723721590909092" blue="0.92723721590909092" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="XJy-KV-p70"/>
+                                    <constraint firstAttribute="height" constant="64" id="ikF-k7-daG"/>
+                                </constraints>
+                            </view>
+                            <view tag="21" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W4i-mZ-1Ag" customClass="STMBTCellView">
+                                <rect key="frame" x="196" y="268" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="FZB-Uj-jkV"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="JF1-Zs-I9V"/>
+                                    <constraint firstAttribute="height" constant="64" id="Nts-Rw-jnh"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="vCn-BP-6HD"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="JF1-Zs-I9V"/>
+                                        <exclude reference="vCn-BP-6HD"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view tag="23" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7MI-ng-aUc" customClass="STMBTCellView">
+                                <rect key="frame" x="340" y="268" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="9Ye-w2-Bmc"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="Ol5-SD-8QK"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="Z6C-NI-qz7"/>
+                                    <constraint firstAttribute="height" constant="64" id="ggd-4w-3yq"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ol5-SD-8QK"/>
+                                        <exclude reference="Z6C-NI-qz7"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view tag="11" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwR-Ka-hzC" customClass="STMBTCellView">
+                                <rect key="frame" x="196" y="196" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="FKW-nQ-19A"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="MzR-8a-tBY"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="SfL-wp-iOL"/>
+                                    <constraint firstAttribute="width" constant="64" id="uQw-4r-HSp"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="MzR-8a-tBY"/>
+                                        <exclude reference="SfL-wp-iOL"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view tag="12" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jg8-gW-yeB" customClass="STMBTCellView">
+                                <rect key="frame" x="268" y="196" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="fWS-1U-YOX"/>
+                                    <constraint firstAttribute="height" constant="64" id="l3N-4W-2gY"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="u4i-dn-MLi"/>
+                                    <constraint firstAttribute="width" constant="64" id="w1a-Ju-4vg"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fWS-1U-YOX"/>
+                                        <exclude reference="u4i-dn-MLi"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view tag="13" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yio-CO-XCU" customClass="STMBTCellView">
+                                <rect key="frame" x="340" y="196" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="GMG-RL-5Ys"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="m0f-SP-i2p"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="128" id="peq-2t-qft"/>
+                                    <constraint firstAttribute="width" constant="64" id="s7P-9A-2HH"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="m0f-SP-i2p"/>
+                                        <exclude reference="peq-2t-qft"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view tag="31" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppq-EZ-CFp" customClass="STMBTCellView">
+                                <rect key="frame" x="196" y="340" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="BOD-PZ-w3X"/>
+                                    <constraint firstAttribute="height" constant="64" id="zK7-LQ-G6Z"/>
+                                </constraints>
+                            </view>
+                            <view tag="32" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yr5-5h-vY5" customClass="STMBTCellView">
+                                <rect key="frame" x="268" y="340" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="3oo-tq-ATC"/>
+                                    <constraint firstAttribute="height" constant="64" id="g8r-Pt-H3B"/>
+                                </constraints>
+                            </view>
+                            <view tag="33" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j2A-sU-cDZ" customClass="STMBTCellView">
+                                <rect key="frame" x="340" y="340" width="64" height="64"/>
+                                <color key="backgroundColor" red="0.92723721589999997" green="0.92723721589999997" blue="0.92723721589999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="RYP-vo-C3i"/>
+                                    <constraint firstAttribute="width" constant="64" id="V5T-e9-Hff"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="j2A-sU-cDZ" firstAttribute="top" secondItem="7MI-ng-aUc" secondAttribute="bottom" constant="8" id="0hR-yh-6aT"/>
+                            <constraint firstItem="j2A-sU-cDZ" firstAttribute="leading" secondItem="Yr5-5h-vY5" secondAttribute="trailing" constant="8" id="7Vx-PT-2yY"/>
+                            <constraint firstItem="Jg8-gW-yeB" firstAttribute="centerX" secondItem="0MQ-Xc-daP" secondAttribute="centerX" id="803-H3-j4v"/>
+                            <constraint firstItem="pW2-bj-CDb" firstAttribute="centerX" secondItem="0MQ-Xc-daP" secondAttribute="centerX" id="Asf-Io-9iJ"/>
+                            <constraint firstItem="W4i-mZ-1Ag" firstAttribute="top" secondItem="JwR-Ka-hzC" secondAttribute="bottom" constant="8" id="DVx-UF-2Xr"/>
+                            <constraint firstItem="7MI-ng-aUc" firstAttribute="centerY" secondItem="0MQ-Xc-daP" secondAttribute="centerY" id="Lme-Iu-2BP"/>
+                            <constraint firstItem="W4i-mZ-1Ag" firstAttribute="centerY" secondItem="0MQ-Xc-daP" secondAttribute="centerY" id="NQk-ng-C94"/>
+                            <constraint firstItem="pW2-bj-CDb" firstAttribute="leading" secondItem="W4i-mZ-1Ag" secondAttribute="trailing" constant="8" id="O8o-4v-JeR"/>
+                            <constraint firstItem="Yr5-5h-vY5" firstAttribute="top" secondItem="pW2-bj-CDb" secondAttribute="bottom" constant="8" id="SEC-uH-xuC"/>
+                            <constraint firstItem="Yio-CO-XCU" firstAttribute="leading" secondItem="Jg8-gW-yeB" secondAttribute="trailing" constant="8" id="Tj3-WE-wwx"/>
+                            <constraint firstItem="Jg8-gW-yeB" firstAttribute="leading" secondItem="JwR-Ka-hzC" secondAttribute="trailing" constant="8" id="ZsU-Ai-Fik"/>
+                            <constraint firstItem="pW2-bj-CDb" firstAttribute="centerY" secondItem="0MQ-Xc-daP" secondAttribute="centerY" id="a0a-73-pMi"/>
+                            <constraint firstItem="7MI-ng-aUc" firstAttribute="leading" secondItem="pW2-bj-CDb" secondAttribute="trailing" constant="8" id="bUj-8N-eos"/>
+                            <constraint firstItem="Yr5-5h-vY5" firstAttribute="leading" secondItem="ppq-EZ-CFp" secondAttribute="trailing" constant="8" id="l1Y-AA-Dzd"/>
+                            <constraint firstItem="Yr5-5h-vY5" firstAttribute="centerX" secondItem="0MQ-Xc-daP" secondAttribute="centerX" id="l2h-bD-RGX"/>
+                            <constraint firstItem="ppq-EZ-CFp" firstAttribute="top" secondItem="W4i-mZ-1Ag" secondAttribute="bottom" constant="8" id="mfg-Zo-Obz"/>
+                            <constraint firstItem="pW2-bj-CDb" firstAttribute="top" secondItem="Jg8-gW-yeB" secondAttribute="bottom" constant="8" id="rgf-9X-hrv"/>
+                            <constraint firstItem="7MI-ng-aUc" firstAttribute="top" secondItem="Yio-CO-XCU" secondAttribute="bottom" constant="8" id="sql-46-wpP"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BrZ-zF-o2o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2770" y="429"/>
         </scene>
         <!--Peripheral ManagerVC-->
         <scene sceneID="DEE-nz-X04">
@@ -108,6 +263,9 @@
                             <constraint firstItem="vtE-qW-BSS" firstAttribute="centerY" secondItem="L3v-yg-xR3" secondAttribute="centerY" id="b0y-BM-RUe"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="htt-st-mVd" kind="show" identifier="showField" id="URo-gE-xf8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tD2-Li-0WP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -136,4 +294,7 @@
             <point key="canvasLocation" x="524" y="429"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="URo-gE-xf8"/>
+    </inferredMetricsTieBreakers>
 </document>
