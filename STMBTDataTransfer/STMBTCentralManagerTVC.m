@@ -33,7 +33,11 @@
 }
 
 - (IBAction)buttonPressed:(id)sender {
+    
     [STMBTCentralManager updateValue:nil];
+    
+    [self performSegueWithIdentifier:@"showGameField" sender:self];
+    
 }
 
 

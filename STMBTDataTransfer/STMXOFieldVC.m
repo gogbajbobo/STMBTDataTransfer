@@ -9,6 +9,15 @@
 #import "STMXOFieldVC.h"
 
 #import "STMXOCellView.h"
+#import "STMXOGame.h"
+
+
+@interface STMXOFieldVC()
+
+@property (nonatomic, strong) STMXOGame *game;
+
+
+@end
 
 
 @implementation STMXOFieldVC
@@ -21,13 +30,16 @@
         
         NSInteger index = cellView.tag;
         
-        [self index:index wasOccupiedByMe:YES];
+        [self.game index:index wasPlayedByMe:YES];
         
     }
     
 }
 
-- (void)index:(NSInteger)index wasOccupiedByMe:(BOOL)byMe {
+- (void)indexWasPlayed:(NSNotification *)notification {
+    
+    NSInteger index = [notification.userInfo[@"index"] integerValue];
+    BOOL byMe = [notification.userInfo[@"index"] boolValue];
     
     STMXOCellView *cellView = [self.view viewWithTag:index];
     
@@ -48,11 +60,18 @@
     
     [super viewDidLoad];
     
+    self.game = [[STMXOGame alloc] init];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(gameCellWasTapped:)
                                                  name:@"gameCellWasTapped"
                                                object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(indexWasPlayed:)
+                                                 name:@"indexWasPlayed"
+                                               object:self.game];
+
 }
 
 

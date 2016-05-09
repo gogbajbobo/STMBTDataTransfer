@@ -23,6 +23,7 @@
 		2C13F4DE1CDE21B800A5F129 /* STMXOCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4DD1CDE21B800A5F129 /* STMXOCellView.m */; };
 		2C13F4E11CDE27B500A5F129 /* XOO.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C13F4DF1CDE27B500A5F129 /* XOO.png */; };
 		2C13F4E21CDE27B500A5F129 /* XOX.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C13F4E01CDE27B500A5F129 /* XOX.png */; };
+		2C13F4E51CDE2A1400A5F129 /* STMXOGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4E41CDE2A1400A5F129 /* STMXOGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		2C13F4DD1CDE21B800A5F129 /* STMXOCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMXOCellView.m; sourceTree = "<group>"; };
 		2C13F4DF1CDE27B500A5F129 /* XOO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XOO.png; sourceTree = "<group>"; };
 		2C13F4E01CDE27B500A5F129 /* XOX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XOX.png; sourceTree = "<group>"; };
+		2C13F4E31CDE2A1400A5F129 /* STMXOGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMXOGame.h; sourceTree = "<group>"; };
+		2C13F4E41CDE2A1400A5F129 /* STMXOGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMXOGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 				2C13F4D71CDE211500A5F129 /* STMXOFieldVC.m */,
 				2C13F4DC1CDE21B800A5F129 /* STMXOCellView.h */,
 				2C13F4DD1CDE21B800A5F129 /* STMXOCellView.m */,
+				2C13F4E31CDE2A1400A5F129 /* STMXOGame.h */,
+				2C13F4E41CDE2A1400A5F129 /* STMXOGame.m */,
 			);
 			path = STMBTDataTransfer;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 				2C13F4D81CDE211500A5F129 /* STMXOFieldVC.m in Sources */,
 				2C13F4C71CDB1B7000A5F129 /* STMBTPeripheralManager.m in Sources */,
 				2C13F4D41CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.m in Sources */,
+				2C13F4E51CDE2A1400A5F129 /* STMXOGame.m in Sources */,
 				2C13F4971CDB1ADC00A5F129 /* ViewController.m in Sources */,
 				2C13F4CA1CDB216100A5F129 /* STMBTCentralManagerTVC.m in Sources */,
 				2C13F4941CDB1ADC00A5F129 /* AppDelegate.m in Sources */,
