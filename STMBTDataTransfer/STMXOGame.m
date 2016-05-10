@@ -10,8 +10,8 @@
 
 @interface STMXOGame()
 
-@property (nonatomic, strong) NSMutableArray *occupiedCells;
-
+@property (nonatomic, strong) NSMutableDictionary *occupiedCells;
+@property (nonatomic) BOOL lastMoveByMe;
 
 @end
 
@@ -35,10 +35,10 @@
     self.occupiedCells = nil;
 }
 
-- (NSMutableArray *)occupiedCells {
+- (NSMutableDictionary *)occupiedCells {
     
     if (!_occupiedCells) {
-        _occupiedCells = @[].mutableCopy;
+        _occupiedCells = @{}.mutableCopy;
     }
     return _occupiedCells;
     
@@ -48,18 +48,75 @@
     return @[@(11),@(12),@(13),@(21),@(22),@(23),@(31),@(32),@(33)];
 }
 
+- (NSArray *)winningIndexes {
+    
+    return @[@[@(11), @(12), @(13)],
+             @[@(21), @(22), @(23)],
+             @[@(31), @(32), @(33)],
+             @[@(11), @(21), @(31)],
+             @[@(12), @(22), @(32)],
+             @[@(13), @(23), @(33)],
+             @[@(11), @(22), @(33)],
+             @[@(13), @(22), @(31)]];
+    
+}
+
 - (void)index:(NSInteger)index wasPlayedByMe:(BOOL)byMe {
     
-    if ([[self availableIndexes] containsObject:@(index)]) {
+    if (self.lastMoveByMe != byMe || self.occupiedCells.allKeys.count == 0) {
+
+        if ([[self availableIndexes] containsObject:@(index)]) {
+            
+            if (![self.occupiedCells.allKeys containsObject:@(index)]) {
+                
+                self.occupiedCells[@(index)] = @(byMe);
+                
+                self.lastMoveByMe = byMe;
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"indexWasPlayed"
+                                                                    object:self
+                                                                  userInfo:@{@"index": @(index), @"byMe": @(byMe)}];
+                
+                [self analyzeField];
+                
+            }
+            
+        }
         
-        if (![self.occupiedCells containsObject:@(index)]) {
+    }
+
+}
+
+- (void)analyzeField {
+    
+    if (self.occupiedCells.allKeys.count > 4) {
+        
+        NSSet *myFields = [self.occupiedCells keysOfEntriesPassingTest:^BOOL(id key, id obj, BOOL *stop) {
+            return [obj boolValue];
+        }];
+
+        NSSet *oppFields = [self.occupiedCells keysOfEntriesPassingTest:^BOOL(id key, id obj, BOOL *stop) {
+            return ![obj boolValue];
+        }];
+
+        for (NSArray *winIndexes in [self winningIndexes]) {
             
-            [self.occupiedCells addObject:@(index)];
+            NSSet *winSet = [NSSet setWithArray:winIndexes];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"indexWasPlayed"
-                                                                object:self
-                                                              userInfo:@{@"index": @(index), @"byMe": @(byMe)}];
-            
+            if ([winSet isSubsetOfSet:myFields]) {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"WIN!"
+                                                                    object:self];
+
+            }
+
+            if ([winSet isSubsetOfSet:oppFields]) {
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"LOSE!"
+                                                                    object:self];
+
+            }
+
         }
         
     }

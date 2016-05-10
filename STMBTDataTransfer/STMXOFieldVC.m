@@ -12,7 +12,7 @@
 #import "STMXOGame.h"
 
 
-@interface STMXOFieldVC()
+@interface STMXOFieldVC() <UIAlertViewDelegate>
 
 @property (nonatomic, strong) STMXOGame *game;
 
@@ -36,6 +36,34 @@
     
 }
 
+- (void)winNotification:(NSNotification *)notification {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WIN!"
+                                                    message:@"Win!"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [alert show];
+    }];
+    
+}
+
+- (void)loseNotification:(NSNotification *)notification {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"LOSE!"
+                                                    message:@"Lose!"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [alert show];
+    }];
+
+}
+
 - (void)indexWasPlayed:(NSNotification *)notification {
     
     NSInteger index = [notification.userInfo[@"index"] integerValue];
@@ -54,6 +82,12 @@
 }
 
 
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 #pragma mark - view lifecycle
 
 - (void)viewDidLoad {
@@ -70,6 +104,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(indexWasPlayed:)
                                                  name:@"indexWasPlayed"
+                                               object:self.game];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(winNotification:)
+                                                 name:@"WIN!"
+                                               object:self.game];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loseNotification:)
+                                                 name:@"LOSE!"
                                                object:self.game];
 
 }
