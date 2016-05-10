@@ -8,14 +8,21 @@
 
 #import "STMBTPeripheralManagerVC.h"
 
-#import "STMBTPeripheralManager.h"
+#import "STMBTManager.h"
 
 
 @implementation STMBTPeripheralManagerVC
 
 
 - (IBAction)updateButtonPressed:(id)sender {
-    [STMBTPeripheralManager updateValue:nil];
+//    [STMBTPeripheralManager updateValue:nil];
+}
+
+
+#pragma mark - STMBTPeripheralManagerDelegate
+
+- (void)successfullyConnected {
+    [self performSegueWithIdentifier:@"showGameField" sender:self];
 }
 
 
@@ -25,6 +32,10 @@
 
     [super viewDidLoad];
     
+    [STMBTManager sharedController].peripheralManager = [STMBTPeripheralManager sharedController];
+    
+    [STMBTPeripheralManager sharedController].delegate = self;
+
     [STMBTPeripheralManager startServiceWithUUID:SERVICE_UUID andCharacteristicUUID:CHARACTERISTIC_UUID];
     
 }
@@ -34,7 +45,12 @@
     [super viewWillDisappear:animated];
     
     if ([self isMovingFromParentViewController]) {
+
         [STMBTPeripheralManager stopService];
+        [STMBTPeripheralManager sharedController].delegate = nil;
+
+        [STMBTManager sharedController].peripheralManager = nil;
+
     }
     
 }

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface STMBTPeripheralManagerVC : UIViewController
+#import "STMBTPeripheralManager.h"
+
+
+@interface STMBTPeripheralManagerVC : UIViewController <STMBTPeripheralManagerDelegate>
 
 @end

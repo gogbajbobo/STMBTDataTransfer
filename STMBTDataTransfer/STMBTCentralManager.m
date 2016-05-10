@@ -105,10 +105,10 @@
 
 + (void)updateValue:(NSData *)newValue {
     
-    NSDictionary *value = @{@"result"   : @"ok",
-                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
-    
-    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
+//    NSDictionary *value = @{@"result"   : @"ok",
+//                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
+//    
+//    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
 
     for (CBPeripheral *peripheral in [self sharedController].connectedPeripherals) {
         [peripheral writeValue:newValue forCharacteristic:[self sharedController].characteristic type:CBCharacteristicWriteWithResponse];
@@ -268,8 +268,23 @@
         
         NSLog(@"didUpdateValueForCharacteristic characteristic.value %@ for peripheral %@", value, peripheral.name);
         
-        if (!characteristic.isNotifying && (characteristic.properties & CBCharacteristicPropertyNotify)) {
-            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+        if (characteristic.isNotifying) {
+            
+            NSInteger index = [[value valueForKey:@"index"] integerValue];
+            
+            NSDictionary *newValue = @{@"index" : @(index),
+                                       @"byMe"  : @(NO)};
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"indexWasPlayed"
+                                                                object:self
+                                                              userInfo:newValue];
+
+        } else {
+
+            if (characteristic.properties & CBCharacteristicPropertyNotify) {
+                [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+            }
+
         }
         
     }
@@ -288,6 +303,10 @@
     if ([self.connectedPeripherals containsObject:peripheral]) {
         
         NSLog(@"characteristic isNotifying %@ for peripheral %@", @(characteristic.isNotifying), peripheral.name);
+        
+        if (characteristic.isNotifying) {
+            [self.delegate successfullyConnected];
+        }
         
     }
     

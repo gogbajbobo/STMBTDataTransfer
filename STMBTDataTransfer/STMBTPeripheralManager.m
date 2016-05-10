@@ -113,12 +113,12 @@
 
 + (void)updateValue:(NSData *)newValue {
     
-    NSDictionary *value = @{@"result"   : @"ok",
-                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
+//    NSDictionary *value = @{@"result"   : @"ok",
+//                            @"timestamp": [NSString stringWithFormat:@"%@", [NSDate date]]};
+//    
+//    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
     
-    newValue = [NSJSONSerialization dataWithJSONObject:value options:0 error:nil];
-    
-    [self sharedController].characteristic.value = newValue;
+//    [self sharedController].characteristic.value = newValue;
 
     [[self sharedController].peripheralManager updateValue:newValue forCharacteristic:[self sharedController].characteristic onSubscribedCentrals:nil];
     
@@ -174,6 +174,8 @@
     
     NSLog(@"peripheral didSubscribeToCharacteristic");
     
+    [self.delegate successfullyConnected];
+    
 }
 
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request {
@@ -182,7 +184,7 @@
     
     if ([self.characteristicUUID isEqual:request.characteristic.UUID]) {
         
-        [[self class] updateValue:nil];
+//        [[self class] updateValue:nil];
         
         request.value = self.characteristic.value;
         
@@ -201,6 +203,17 @@
         if ([self.characteristicUUID isEqual:request.characteristic.UUID]) {
 
             [self.peripheralManager updateValue:request.value forCharacteristic:self.characteristic onSubscribedCentrals:nil];
+
+            id value = [NSJSONSerialization JSONObjectWithData:request.value options:NSJSONReadingMutableContainers error:nil];
+
+            NSInteger index = [[value valueForKey:@"index"] integerValue];
+            
+            NSDictionary *newValue = @{@"index" : @(index),
+                                       @"byMe"  : @(NO)};
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"indexWasPlayed"
+                                                                object:self
+                                                              userInfo:newValue];
 
             [self.peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
             

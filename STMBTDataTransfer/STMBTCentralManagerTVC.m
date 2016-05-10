@@ -8,6 +8,8 @@
 
 #import "STMBTCentralManagerTVC.h"
 
+#import "STMBTManager.h"
+
 
 @interface STMBTCentralManagerTVC ()
 
@@ -34,9 +36,9 @@
 
 - (IBAction)buttonPressed:(id)sender {
     
-    [STMBTCentralManager updateValue:nil];
-    
-    [self performSegueWithIdentifier:@"showGameField" sender:self];
+//    [STMBTCentralManager updateValue:nil];
+//    
+//    [self performSegueWithIdentifier:@"showGameField" sender:self];
     
 }
 
@@ -71,6 +73,11 @@
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     
 }
+
+- (void)successfullyConnected {
+    [self performSegueWithIdentifier:@"showGameField" sender:self];
+}
+
 
 #pragma mark - Table view data source
 
@@ -121,6 +128,8 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:[self cellIdentifier]];
     
+    [STMBTManager sharedController].centralManager = [STMBTCentralManager sharedController];
+    
     [STMBTCentralManager sharedController].delegate = self;
     [STMBTCentralManager startScanForServiceWithUUID:SERVICE_UUID withCharacteristicUUID:CHARACTERISTIC_UUID];
     
@@ -131,7 +140,12 @@
     [super viewWillDisappear:animated];
     
     if ([self isMovingFromParentViewController]) {
+        
         [STMBTCentralManager stopScan];
+        [STMBTCentralManager sharedController].delegate = nil;
+
+        [STMBTManager sharedController].centralManager = nil;
+
     }
     
 }

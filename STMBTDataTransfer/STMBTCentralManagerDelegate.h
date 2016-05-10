@@ -19,5 +19,7 @@
 - (void)didFailToConnectPeripheral:(CBPeripheral *)peripheral;
 - (void)didDisconnectPeripheral:(CBPeripheral *)peripheral;
 
+- (void)successfullyConnected;
+
 
 @end

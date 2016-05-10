@@ -39,7 +39,7 @@
 - (void)indexWasPlayed:(NSNotification *)notification {
     
     NSInteger index = [notification.userInfo[@"index"] integerValue];
-    BOOL byMe = [notification.userInfo[@"index"] boolValue];
+    BOOL byMe = [notification.userInfo[@"byMe"] boolValue];
     
     STMXOCellView *cellView = [self.view viewWithTag:index];
     
@@ -60,7 +60,7 @@
     
     [super viewDidLoad];
     
-    self.game = [[STMXOGame alloc] init];
+    self.game = [STMXOGame sharedGame];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(gameCellWasTapped:)
@@ -72,6 +72,10 @@
                                                  name:@"indexWasPlayed"
                                                object:self.game];
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.game flushGame];
 }
 
 

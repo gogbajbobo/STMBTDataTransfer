@@ -10,7 +10,10 @@
 
 @interface STMXOGame : NSObject
 
++ (STMXOGame *)sharedGame;
+
 - (void)index:(NSInteger)index wasPlayedByMe:(BOOL)byMe;
+- (void)flushGame;
 
 
 @end

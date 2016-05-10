@@ -18,6 +18,23 @@
 
 @implementation STMXOGame
 
++ (STMXOGame *)sharedGame {
+    
+    static dispatch_once_t pred = 0;
+    __strong static id _sharedGame = nil;
+    
+    dispatch_once(&pred, ^{
+        _sharedGame = [[self alloc] init];
+    });
+    
+    return _sharedGame;
+    
+}
+
+- (void)flushGame {
+    self.occupiedCells = nil;
+}
+
 - (NSMutableArray *)occupiedCells {
     
     if (!_occupiedCells) {

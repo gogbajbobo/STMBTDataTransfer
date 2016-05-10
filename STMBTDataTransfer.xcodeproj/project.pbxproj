@@ -24,6 +24,7 @@
 		2C13F4E11CDE27B500A5F129 /* XOO.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C13F4DF1CDE27B500A5F129 /* XOO.png */; };
 		2C13F4E21CDE27B500A5F129 /* XOX.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C13F4E01CDE27B500A5F129 /* XOX.png */; };
 		2C13F4E51CDE2A1400A5F129 /* STMXOGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4E41CDE2A1400A5F129 /* STMXOGame.m */; };
+		2C13F4E81CE2019400A5F129 /* STMBTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C13F4E71CE2019400A5F129 /* STMBTManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,9 @@
 		2C13F4E01CDE27B500A5F129 /* XOX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = XOX.png; sourceTree = "<group>"; };
 		2C13F4E31CDE2A1400A5F129 /* STMXOGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMXOGame.h; sourceTree = "<group>"; };
 		2C13F4E41CDE2A1400A5F129 /* STMXOGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMXOGame.m; sourceTree = "<group>"; };
+		2C13F4E61CE2019400A5F129 /* STMBTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTManager.h; sourceTree = "<group>"; };
+		2C13F4E71CE2019400A5F129 /* STMBTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STMBTManager.m; sourceTree = "<group>"; };
+		2C13F4E91CE208B700A5F129 /* STMBTPeripheralManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STMBTPeripheralManagerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,11 +144,14 @@
 				2C13F4A01CDB1ADC00A5F129 /* Info.plist */,
 				2C13F48F1CDB1ADC00A5F129 /* Supporting Files */,
 				2C13F4CB1CDB21DF00A5F129 /* STMBTConstants.h */,
+				2C13F4E61CE2019400A5F129 /* STMBTManager.h */,
+				2C13F4E71CE2019400A5F129 /* STMBTManager.m */,
 				2C13F4D51CDB701600A5F129 /* STMBTCentralManagerDelegate.h */,
 				2C13F4C21CDB1B4D00A5F129 /* STMBTCentralManager.h */,
 				2C13F4C31CDB1B4D00A5F129 /* STMBTCentralManager.m */,
 				2C13F4C81CDB216100A5F129 /* STMBTCentralManagerTVC.h */,
 				2C13F4C91CDB216100A5F129 /* STMBTCentralManagerTVC.m */,
+				2C13F4E91CE208B700A5F129 /* STMBTPeripheralManagerDelegate.h */,
 				2C13F4C51CDB1B7000A5F129 /* STMBTPeripheralManager.h */,
 				2C13F4C61CDB1B7000A5F129 /* STMBTPeripheralManager.m */,
 				2C13F4D21CDB6C0D00A5F129 /* STMBTPeripheralManagerVC.h */,
@@ -326,6 +333,7 @@
 				2C13F4941CDB1ADC00A5F129 /* AppDelegate.m in Sources */,
 				2C13F4C41CDB1B4D00A5F129 /* STMBTCentralManager.m in Sources */,
 				2C13F4911CDB1ADC00A5F129 /* main.m in Sources */,
+				2C13F4E81CE2019400A5F129 /* STMBTManager.m in Sources */,
 				2C13F4DE1CDE21B800A5F129 /* STMXOCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
